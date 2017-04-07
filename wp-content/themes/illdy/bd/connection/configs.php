@@ -6,7 +6,7 @@
  * Time: 19:47
  */
 
-define('MYSQL_SERVER', '127.0.0.1:3306');
-define('MYSQL_USERNAME', 'root');
-define('MYSQL_PASSWORD', '');
-define('MYSQL_DATABASE', 'mydb');
+define('MYSQL_SERVER', 'ais.dsi.uminho.pt');
+define('MYSQL_USERNAME', 'ais');
+define('MYSQL_PASSWORD', 'valvula');
+define('MYSQL_DATABASE', 'ais_projeto');

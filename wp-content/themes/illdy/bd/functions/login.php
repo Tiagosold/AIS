@@ -15,10 +15,10 @@ function validateLogin($params)
     $pass = $params['password'];
     $conn = dbConnect();
     $query = "SELECT * FROM utilizador WHERE email='$email'";
-    $result = mysql_query($query, $conn) or die(mysql_error());
+    $result = mysqli_query($conn,$query) or die(mysqli_error($conn));
 
-    if (mysql_num_rows($result) === 1) {
-        $fetch = mysql_fetch_array($result);
+    if (mysqli_num_rows($result) === 1) {
+        $fetch = mysqli_fetch_array($result);
         $dbPass = $fetch['password'];
         $idType = $fetch['idTipoUtilizador'];
    //     $name = $fetch['name'];
@@ -44,7 +44,7 @@ function validateLogin($params)
         $response['cod'] = 401;
 
     }
-    mysql_close($conn);
+    mysqli_close($conn);
     return $response;
 }
 
@@ -63,36 +63,36 @@ function addEditAssociate($params){
     $user_type = $params['user_type'];
 
     $teste = "SELECT * From utilizador Where email='$email'";
-    $resultTest = mysql_query($teste, $connection) or die(mysql_error());
+    $resultTest = mysqli_query($connection,$teste) or die(mysqli_error($connection));
 
     if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        if(mysql_num_rows($resultTest) === 0) {
+        if(mysqli_num_rows($resultTest) === 0) {
             if ($id === '0') {
                 $query = "INSERT INTO utilizador (password, email, telemovel,ano,idCurso,"
                     . " numeroCotas, idTipoUtilizador, estado, dataFinal, nomeUtilizador, numeroAluno) "
                     . "VALUES ('$password', '$email', '$phone','$year','$course', '$quotas', '$user_type', '0', '0', '$name', '$student_number')";
             }
-            $result = mysql_query($query, $connection);
+            $result = mysqli_query($connection,$query);
             if ($result) {
                 $response['cod'] = 201;
                 $response['error'] = FALSE;
-                $response['msg'] = mysql_insert_id();
+                $response['msg'] = mysqli_insert_id();
             } else {
                 $response['cod'] = 500;
                 $response['error'] = TRUE;
-                $response['msg'] = mysql_error($connection);
+                $response['msg'] = mysqli_error($connection);
             }
         }else {
             $response['cod'] = 502;
             $response['error'] = TRUE;
-            $response['msg'] = mysql_error($connection);
+            $response['msg'] = mysqli_error($connection);
         }
     }else {
         $response['cod'] = 501;
         $response['error'] = TRUE;
-        $response['msg'] = mysql_error($connection);
+        $response['msg'] = mysqli_error($connection);
     }
-    mysql_close($connection);
+    mysqli_close($connection);
     return $response;
 }
 

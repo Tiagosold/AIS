@@ -16,6 +16,13 @@
     <!-- Bootstrap core CSS -->
     <link href="/wordpress/wp-content/themes/illdy/layout/css/bootstrap.min.css" rel="stylesheet">
     <link href="/wordpress/wp-content/themes/illdy/layout/css/style-admin.css" rel="stylesheet">
+      <link href="/wordpress/wp-content/themes/illdy/layout/css/jquery.dataTables.min.css" rel="stylesheet">
+      <script src="/wordpress/wp-content/themes/illdy/jsautoload/jquery.js"></script>
+      <script src="/wordpress/wp-content/themes/illdy/jsautoload/jquery-1.11.2.min.js"></script>
+      <script src="/wordpress/wp-content/themes/illdy/js/bootstrap.min.js"></script>
+      <script src="/wordpress/wp-content/themes/illdy/js/jquery.dataTables.min.js"></script>
+      <script src="/wordpress/wp-content/themes/illdy/jsautoload/lAdmin.js"></script>
+      <script src="/wordpress/wp-content/themes/illdy/jsautoload/lassociate.js"></script>
     <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
   </head>
   <body>
@@ -120,12 +127,9 @@
 
               <!-- Latest Users -->
               <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Latest Users</h3>
+                <div class="panel-heading" id="panel-heading">
                 </div>
-                <div class="panel-body">
-                  <table class="table table-striped table-hover" id="associates_table">
-
+                <div class="panel-body" id="panel-body">
       <!--
                       <tr>
                         <td>Jill Smith</td>
@@ -153,7 +157,6 @@
                         <td><span class="glyphicon glyphicon-remove" aria-hidden="true"></td>
                       </tr>
                       -->
-                    </table>
                 </div>
               </div>
           </div>
@@ -215,10 +218,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/wordpress/wp-content/themes/illdy/js/bootstrap.min.js"></script>
-    <script src="/wordpress/wp-content/themes/illdy/jsautoload/jquery.js"></script>
-    <script src="/wordpress/wp-content/themes/illdy/jsautoload/lAdmin.js"></script>
-    <script src="/wordpress/wp-content/themes/illdy/jsautoload/lassociate.js"></script>
+
   </body>
 </html>

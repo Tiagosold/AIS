@@ -5,8 +5,14 @@
 $(document).ready(function () {
     $('.panel-default').css("visibility", "hidden");
     $("#partners_view").on('click', function () {
-        $("#associates_table").empty();
-        getAssociates();
+        if($('.panel-default').css('visibility') == 'visible'){
+            $('.panel-default').css("visibility", "hidden");
+        }else {
+            $('#panel-heading').empty();
+            $("#associates_table").empty();
+            $("#panel-body").empty();
+            getAssociates();
+        }
     });
 });
 
@@ -23,16 +29,20 @@ function getAssociates() {
         },
         statusCode: {
             200: function(response){
+                $('#panel-heading').append('<h3 class="panel-title">Sócios</h3>');
+                $("#panel-body").append('<table id="associates_table" class="table table-striped table-hover"></table>');
+                $("#associates_table").append('<thead><tr id="hello"></tr></thead>');
                 var titles = ['Nome', 'NºAluno', 'Email', 'Telemóvel', 'Ano', 'Curso', 'Inicio', 'Fim', 'Estado'];
                 var counting = 0;
                 for (i=0; i<titles.length;i++) {
-                    $('#associates_table').append('<th>'+titles[i]+'</th>');
+                    $('#hello').append('<th>'+titles[i]+'</th>');
                 }
+                $("#associates_table").append('<tbody id=bodyT></tbody>');
                 for (i=0; i<response.length;i++){
-                    $('#associates_table').append('<tr id="associate'+counting+'"></tr>');
-                    $('#associate'+counting).append('<td style="width:22.5%">'+response[i].nomeUtilizador+'</td>');
+                    $('#bodyT').append('<tr id="associate'+counting+'"></tr>');
+                    $('#associate'+counting).append('<td style="width:17.5%">'+response[i].nomeUtilizador+'</td>');
                     $('#associate'+counting).append('<td style="width:6%">'+response[i].numeroAluno+'</td>');
-                    $('#associate'+counting).append('<td style="width:17.5%">'+response[i].email+'</td>');
+                    $('#associate'+counting).append('<td style="width:22.5%">'+response[i].email+'</td>');
                     $('#associate'+counting).append('<td style="width:9%">'+response[i].telemovel+'</td>');
                     $('#associate'+counting).append('<td style="width:5%">'+response[i].ano+'º</td>');
                     $('#associate'+counting).append('<td style="width:8%">'+response[i].designacao+'</td>');
@@ -49,6 +59,21 @@ function getAssociates() {
                     $('#associate'+counting).append('<input id="id-associate'+counting+'" type="hidden" value="'+response[i].idUtilizador+'"/>')
                     counting++;
                 }
+                $('#associates_table').DataTable({
+                    "pageLength": 10,
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registos por página",
+                        "zeroRecords": "Nenhum registo encontrado",
+                        "info": "Página _PAGE_ de _PAGES_",
+                        "infoEmpty": "Nenhum registo disponivel",
+                        "infoFiltered": "(Filtrado de _MAX_ registos)",
+                        "paginate": {
+                            "previous": "Anterior",
+                            "next": "Próximo"
+                        },
+                        "search": "Pesquisa"
+                    }
+                });
                 $('.panel-default').css("visibility", "visible");
             },
             500: function(response){

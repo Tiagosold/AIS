@@ -68,8 +68,9 @@ $(document).ready(function () {
                         alert('Password incorreta');
                     },
                     400: function () {
-                        console.log("");
+                        console.log();
                     }
+
                 }
             });
 
