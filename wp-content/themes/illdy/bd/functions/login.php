@@ -12,33 +12,60 @@ function validateLogin($params)
 {
     $response = array();
     $email = $params['email'];
-    $pass = $params['password'];
     $conn = dbConnect();
+    $id = $params['id'];
     $query = "SELECT * FROM utilizador WHERE email='$email'";
-    $result = mysqli_query($conn,$query) or die(mysqli_error($conn));
+    $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
 
     if (mysqli_num_rows($result) === 1) {
         $fetch = mysqli_fetch_array($result);
-        $dbPass = $fetch['password'];
-        $idType = $fetch['idTipoUtilizador'];
-   //     $name = $fetch['name'];
-   //     $lastName = $fetch['lastName'];
         $email = $fetch['email'];
-        if ($dbPass == $pass) {
-            $response['msg'] = "validation success";
+        if ($id == 0) {
+            $pass = $params['password'];
+            $dbPass = $fetch['password'];
+            $idType = $fetch['idTipoUtilizador'];
+            //     $name = $fetch['name'];
+            //     $lastName = $fetch['lastName'];
+           //if ($dbPass === $pass) {
+            if(hash_equals($dbPass, crypt($pass, $dbPass))){
+                if ($fetch['estado'] == 1) {
+                    if ($fetch['validada'] == 0) {
+                        $response['msg'] = "Account not validated";
+                        $response['error'] = TRUE;
+                        $response['cod'] = 403;
+                    } else {
+                        $response['msg'] = "validation success";
+                        $response['error'] = FALSE;
+                        $response['idType'] = $idType;
+                        $response['email'] = $email;
+                        $response['cod'] = 200;
+                    }
+                } else {
+                    $response['msg'] = "Account not confirmed";
+                    $response['error'] = TRUE;
+                    $response['cod'] = 405;
+                }
+            } else {
+               $response['password'] = $dbPass;
+               $response['pass'] = crypt($pass, $dbPass);
+                $response['msg'] = "validation fail";
+                $response['error'] = TRUE;
+                $response['cod'] = 404;
+            }
+        } elseif ($id == 1) {
+            $random = $fetch['random'];
+            $response['random'] = $random;
+            $response['msg'] = "Email successfull retrieved";
             $response['error'] = FALSE;
-            $response['idType'] = $idType;
-    //        $response['name'] = $name;
-            $response['email'] = $email;
-    //        $response['lastName'] = $lastName;
             $response['cod'] = 200;
-
-        }else {
-            $response['msg'] = "validation fail";
-            $response['error'] = TRUE;
-            $response['cod'] = 404;
+            $response['email'] = $email;
+            $response['idAssociate'] = $fetch['idUtilizador'];
+        } else {
+            $response['msg'] = "Nenhum ID";
+            $response['error'] = FALSE;
+            $response['cod'] = 401;
         }
-    }else {
+    } else {
         $response['msg'] = "validation fail";
         $response['error'] = TRUE;
         $response['cod'] = 401;
@@ -48,51 +75,134 @@ function validateLogin($params)
     return $response;
 }
 
-function addEditAssociate($params){
+function validateUser($params)
+{
+    $response = array();
+    $random = $params['random'];
+    $conn = dbConnect();
+    $query = "UPDATE utilizador SET validada='1' WHERE random='$random';";
+    $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+
+    if ($result) {
+        $response['cod'] = 201;
+        $response['error'] = FALSE;
+        $response['msg'] = 'Validated';
+    } else {
+        $response['cod'] = 500;
+        $response['error'] = TRUE;
+        $response['msg'] = mysqli_error($connection);
+    }
+    mysqli_close($conn);
+    return $response;
+}
+
+function addEditAssociate($params)
+{
     $response = array();
     $connection = dbConnect();
     $id = $params['id'];
     $email = $params['email'];
-    $password = $params['password'];
     $phone = $params['phone'];
     $course = $params['course'];
     $year = $params['year'];
-    $quotas = $params['quotas'];
     $name = $params['name'];
     $student_number = $params['student_number'];
-    $user_type = $params['user_type'];
-
-    $teste = "SELECT * From utilizador Where email='$email'";
-    $resultTest = mysqli_query($connection,$teste) or die(mysqli_error($connection));
-
-    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        if(mysqli_num_rows($resultTest) === 0) {
-            if ($id === '0') {
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if ($id === '0') {
+            $teste = "SELECT * From utilizador Where email='$email' or numeroAluno = '$student_number' and numeroAluno != ''";
+            $resultTest = mysqli_query($connection, $teste);
+            if (mysqli_num_rows($resultTest) === 0) {
+                $quotas = $params['quotas'];
+                $password = $params['password'];
+                $hashed = encryptPassword($password);
+                $user_type = $params['user_type'];
+                $random = $params['random'];
                 $query = "INSERT INTO utilizador (password, email, telemovel,ano,idCurso,"
-                    . " numeroCotas, idTipoUtilizador, estado, dataFinal, nomeUtilizador, numeroAluno) "
-                    . "VALUES ('$password', '$email', '$phone','$year','$course', '$quotas', '$user_type', '0', '0', '$name', '$student_number')";
-            }
-            $result = mysqli_query($connection,$query);
-            if ($result) {
-                $response['cod'] = 201;
-                $response['error'] = FALSE;
-                $response['msg'] = mysqli_insert_id();
+                    . " numeroCotas, idTipoUtilizador, estado, dataFinal, nomeUtilizador, numeroAluno, dataInicio, validada, random) "
+                    . "VALUES ('$hashed', '$email', '$phone','$year','$course', '$quotas', '$user_type', '0', '-', '$name', '$student_number', '-', '0', '$random')";
             } else {
-                $response['cod'] = 500;
+                $response['cod'] = 502;
                 $response['error'] = TRUE;
                 $response['msg'] = mysqli_error($connection);
             }
-        }else {
-            $response['cod'] = 502;
+        } elseif ($id === '2') {
+            $idAssociate = $params['idAssociate'];
+            $initialDate = $params['initialDate'];
+            $finalDate = $params['finalDate'];
+            $query = "UPDATE utilizador SET numeroAluno='$student_number', nomeUtilizador='$name', email='$email', telemovel='$phone', 
+                ano='$year', dataFinal='$finalDate', idCurso='$course', dataInicio='$initialDate' WHERE idUtilizador='$idAssociate';";
+        }
+        $result = mysqli_query($connection, $query);
+        if ($result) {
+            $response['cod'] = 201;
+            $response['error'] = FALSE;
+            $response['msg'] = mysqli_insert_id();
+        } else {
+            $response['cod'] = 500;
             $response['error'] = TRUE;
             $response['msg'] = mysqli_error($connection);
         }
-    }else {
+
+    } else {
         $response['cod'] = 501;
         $response['error'] = TRUE;
         $response['msg'] = mysqli_error($connection);
     }
     mysqli_close($connection);
     return $response;
+}
+
+function changePassword($params)
+{
+    $response = array();
+    $conn = dbConnect();
+    $random = $params['random'];
+    $password = $params['password'];
+    $idAssociate = $params['idAssociate'];
+
+    $query = "Select * From utilizador Where idUtilizador = '$idAssociate' and random = '$random'";
+    $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    if (mysqli_num_rows($result) === 1) {
+        $hashed = encryptPassword($password);
+        $queryUpdate = "UPDATE utilizador SET password='$hashed' WHERE idUtilizador='$idAssociate' and random = '$random'";
+        $resultUpdate = mysqli_query($conn, $queryUpdate) or die(mysqli_error($conn));
+        if ($resultUpdate) {
+            $response['cod'] = 201;
+            $response['error'] = FALSE;
+            $response['msg'] = 'Password changed';
+        } else {
+            $response['cod'] = 501;
+            $response['error'] = TRUE;
+            $response['msg'] = 'Error updating';
+        }
+
+    } else {
+        $response['cod'] = 500;
+        $response['error'] = TRUE;
+        $response['msg'] = 'No user with that id and random';
+    }
+
+    mysqli_close($conn);
+    return $response;
+}
+
+function encryptPassword($password)
+{
+// A higher "cost" is more secure but consumes more processing power
+    $cost = 10;
+
+// Create a random salt
+    $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+
+// Prefix information about the hash so PHP knows how to verify it later.
+// "$2a$" Means we're using the Blowfish algorithm. The following two digits are the cost parameter.
+    $salt = sprintf("$2a$%02d$", $cost) . $salt;
+
+// Value:
+// $2a$10$eImiTXuWVxfM37uY4JANjQ==
+
+// Hash the password with the salt
+    $hash = crypt($password, $salt);
+    return $hash;
 }
 

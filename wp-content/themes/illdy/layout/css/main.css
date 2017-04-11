@@ -2933,24 +2933,160 @@ p.mb32 {
 }
 
 
-#loginJQ .lost {
+#loginJQ .forgotJQ {
 	margin-right:13px;
 	float: right;
 }
 
-/*Registar CSS*/
-
-#registarJQ{
+/*Forgot layout*/
+#forgotJQ{
 	display: none;
 	background-color: #FFFFFF;
 	position: fixed;
-	top: 75px;
+	top: 200px;
 	padding: 15px 25px 25px 25px;
 	width: 350px;
 	z-index: 999;
 	left: 50%;
 	margin-left: -200px;
 
+}
+
+#forgotJQ p.status{
+	display: none;
+}
+
+.forgotJQ_overlay{
+	height: 100%;
+	width: 100%;
+	background-color: #F6F6F6;
+	opacity: 0.9;
+	position: fixed;
+	z-index: 998;
+}
+
+#forgotJQ input[type="email"]{
+	padding: 7px 5px;
+	margin: 5px 0;
+	width: 96%;
+	display: block;
+	font-size: 14px;
+	border-radius: 5px;
+	border: none;
+	-webkit-transition: 0.3s linear;
+	-moz-transition: 0.3s linear;
+	-o-transition: 0.3s linear;
+	transition: 0.3s linear;
+
+}
+#forgotJQ input[type="email"]:focus{
+	outline: none;
+	box-shadow: 0 0 1px 1px #1abc9c;
+}
+
+#forgotJQ input[type="button"] {
+	background-color: #1dafba;
+	margin: 20px auto;
+	padding: 5px;
+	font-size: 15px;
+	display: block;
+	width: 50%;
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+
+}
+#forgotJQ input[type="button"]:hover {
+	background: #adadad;
+}
+
+#forgotJQ .close {
+	margin: -40px -50px 0 0px;
+}
+
+#forgotJQ .header-button-one {
+	margin-right:13px;
+	float: right;
+}
+
+/* New Password layout*/
+
+#newPassJQ{
+	display: none;
+	background-color: #FFFFFF;
+	position: fixed;
+	top: 200px;
+	padding: 15px 25px 25px 25px;
+	width: 350px;
+	z-index: 999;
+	left: 50%;
+	margin-left: -200px;
+
+}
+
+#newPassJQ p.status{
+	display: none;
+}
+
+.newPassJQ_overlay{
+	height: 100%;
+	width: 100%;
+	background-color: #F6F6F6;
+	opacity: 0.9;
+	position: fixed;
+	z-index: 998;
+}
+
+#newPassJQ input[type="password"]{
+	padding: 7px 5px;
+	margin: 5px 0;
+	width: 96%;
+	display: block;
+	font-size: 14px;
+	border-radius: 5px;
+	border: none;
+	-webkit-transition: 0.3s linear;
+	-moz-transition: 0.3s linear;
+	-o-transition: 0.3s linear;
+	transition: 0.3s linear;
+
+}
+#newPassJQ input[type="email"]:focus{
+	outline: none;
+	box-shadow: 0 0 1px 1px #1abc9c;
+}
+
+#newPassJQ input[type="button"] {
+	background-color: #1dafba;
+	margin: 20px auto;
+	padding: 5px;
+	font-size: 15px;
+	display: block;
+	width: 50%;
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+
+}
+#newPassJQ input[type="button"]:hover {
+	background: #adadad;
+}
+
+#newPassJQ .close {
+	margin: -40px -50px 0 0px;
+}
+/*Registar CSS*/
+
+#registarJQ{
+	display: none;
+	background-color: #FFFFFF;
+	position: absolute;
+	top: 50px;
+	padding: 15px 25px 25px 25px;
+	width: 350px;
+	z-index: 999;
+	left: 50%;
+	margin-left: -200px;
 }
 
 #registarJQ p.status{

@@ -8,13 +8,10 @@ if (isset($_GET['logout']) && isset($_SESSION['idType'])) {
 }
 
 if (isset($_GET['idType'])) {
-    if($_GET['idType'] == 1) {
         $email = $_GET['email'];
         $id = $_GET['idType'];
         $_SESSION['email'] = $email;
         $_SESSION['idType'] = $id;
-
-    }
 } /*elseif(isset($_GET['idPatient'])){
     $email = $_GET['email'];
     $id = $_GET['idPatient'];
@@ -45,13 +42,13 @@ function confirmPatientOrDP(){
         redirect('../redirectUser.php');
     }
 }
-
+*/
 function confirm_admin() {
-    if (!isset($_SESSION['idAdmin'])) {
-        redirect('../redirectUser.php');
+    if ($_SESSION['idType'] != 1) {
+        redirect('/wordpress/404.php');
     }
 }
-
+/*
 function confirmPatient(){
     if(!isset($_SESSION['idPatient'])){
         redirect('../redirectUser.php');
@@ -63,8 +60,15 @@ function confirmHealthProfessional(){
         redirect('../redirectUser.php');
     }
 }
-
+*/
 function redirect($url){
     header("Location: $url");
 }
-*/
+
+//redirect users
+function redirect_users($id)
+{
+    if((isset($_SESSION['idType'])) && ($id == 1)){
+        redirect('/wordpress/404.php');
+    }
+}

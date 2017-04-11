@@ -44,6 +44,7 @@ if ( ( is_single() || is_page() || is_archive() ) && get_theme_mod( 'illdy_archi
 	$style .= 'background-size:contain;background-repeat:no-repeat;';
 }
 require_once 'session.php';
+require_once "wp-content/themes/illdy/Mail-1.4.0/Mail.php";
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -125,5 +126,7 @@ else: echo 'header-blog'; endif; ?>" style="<?php echo $style ?>">
 		get_template_part( 'sections/blog', 'bottom-header' );
 	endif;
 	?>
+    <link href="/wordpress/wp-content/themes/illdy/js/jquery_ui/jquery-ui.css" rel="stylesheet">
+    <script src="/wordpress/wp-content/themes/illdy/js/jquery_ui/jquery-ui.js"></script>
 </header><!--/#header-->
 

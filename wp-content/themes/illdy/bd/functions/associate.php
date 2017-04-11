@@ -10,13 +10,18 @@ require_once dirname(__FILE__) . '/../connection/dbconnect.php';
 function changeAssociateState($params){
     $response = array();
     $idAssociate = $params['idAssociate'];
-    $quotas = $params['quotas'];
-    $date = date('d-m-Y');
-    $state = 1;
-    $finalData = date('d-m-Y', strtotime('+ '.$quotas.' years'));
+    $id = $params['id'];
 
     $connection = dbConnect();
-    $query = "UPDATE utilizador SET estado='$state', dataInicio='$date', dataFinal='$finalData' WHERE idUtilizador='$idAssociate';";
+    if($id == 1) {
+        $quotas = $params['quotas'];
+        $date = date('d-m-Y');
+        $state = 1;
+        $finalData = date('d-m-Y', strtotime('+ '.$quotas.' years'));
+        $query = "UPDATE utilizador SET estado='$state', dataInicio='$date', dataFinal='$finalData' WHERE idUtilizador='$idAssociate';";
+    }elseif($id == 2){
+        $query = "";
+    }
     $result = mysqli_query($connection,$query) or die(mysqli_error($connection));
 
     if($result){
@@ -32,9 +37,14 @@ function changeAssociateState($params){
 
 function getAssociates($params){
     $response = array();
-
+    $id = $params['id'];
     $connection = dbConnect();
-    $query = "Select * From utilizador, curso Where utilizador.idCurso = curso.idcurso and idTipoUtilizador =2 ";
+    if($id == 1) {
+        $query = "Select * From utilizador, curso Where utilizador.idCurso = curso.idcurso and idTipoUtilizador = 2 ";
+    }elseif($id == 2) {
+        $idAssociate = $params['idAssociate'];
+        $query = "Select * From utilizador, curso Where utilizador.idCurso = curso.idcurso and idUtilizador = $idAssociate";
+    }
     $result = mysqli_query($connection,$query) or die(mysqli_error($connection));
 
     if ($result) {

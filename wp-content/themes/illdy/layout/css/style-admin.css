@@ -148,9 +148,104 @@ body{
 
 #associates_table tr, th{
     text-align: center;
+    font-size: 95%;
 }
 
 #validateAssociate{
     border: none;
     background-color: Transparent;
+}
+
+#modify{
+    border: none;
+    background-color: Transparent;
+}
+
+
+/* hidden update */
+#updateAssociate{
+    display: none;
+    background-color: #FFFFFF;
+    position: fixed;
+    top: 75px;
+    padding: 15px 25px 25px 25px;
+    width: 350px;
+    z-index: 999;
+    left: 50%;
+    margin-left: -200px;
+
+}
+
+#updateAssociate p.status{
+    display: none;
+}
+
+.updateAssociate_overlay{
+    height: 100%;
+    width: 100%;
+    background-color: #F6F6F6;
+    opacity: 0.9;
+    position: fixed;
+    z-index: 998;
+}
+
+#updateAssociate .close{
+    margin: -40px -50px 0 0px;
+}
+
+#updateAssociate input[type="email"], #updateAssociate input[type="tel"], #updateAssociate input[type="text"] {
+    padding: 7px 5px;
+    margin: 5px 0;
+    width: 96%;
+    display: block;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    transition: 0.3s linear;
+
+}
+#updateAssociate input[type="email"]:focus, #updateAssociate input[type="tel"]:focus, #updateAssociate input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 1px 1px #1abc9c;
+}
+
+#updateAssociate input[type="button"] {
+    background-color: #1dafba;
+    margin: 20px auto;
+    padding: 5px;
+    font-size: 15px;
+    display: block;
+    width: 50%;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+
+}
+#updateAssociate input[type="button"]:hover {
+    background: #adadad;
+}
+
+.select-style {
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa no-repeat 90% 50%;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 110%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+.loginh1{
+    text-align: center;
 }
