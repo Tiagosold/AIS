@@ -124,6 +124,7 @@ if (isset($_GET['reg'])){
 </div>
     <div id="confirmsg" style="color:green; font-size:75%; display:none"></div>
     <input id="registo" type="button" value="Registar" name="registo">
+    <?//php echo do_shortcode('[qpp]'); ?>
 <a class="header-button-one" href="#">Iniciar Sessão</a>
 </div>
 <section id="testimonials" class="front-page-section"

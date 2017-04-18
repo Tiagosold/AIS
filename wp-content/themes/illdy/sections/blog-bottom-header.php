@@ -7,6 +7,7 @@
  *             * @TODO: https://developer.wordpress.org/reference/functions/get_the_archive_title/
  */
 ?>
+
 <div class="bottom-header blog">
 	<div class="container">
 		<div class="row">

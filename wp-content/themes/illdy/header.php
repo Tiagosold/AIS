@@ -1,3 +1,5 @@
+
+
 <?php
 /**
  *    The template for displaying the header.
@@ -45,6 +47,8 @@ if ( ( is_single() || is_page() || is_archive() ) && get_theme_mod( 'illdy_archi
 }
 require_once 'session.php';
 require_once "wp-content/themes/illdy/Mail-1.4.0/Mail.php";
+require_once 'wp-content/themes/illdy/bd/functions/associate.php';
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -118,8 +122,76 @@ else: echo 'header-blog'; endif; ?>" style="<?php echo $style ?>">
 			?>
 		</ul>
 	</nav><!--/.responsive-menu-->
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+        <!-- User profile  -->
+        <div class="panel panel-info" id="profile-information">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 " align="center">
+                        <div id="image-place"></div>
+                        <br>
+                        <form method="post" enctype="multipart/form-data">
+                            <label class="btn btn-default btn-file" style="font-size:small">
+                            Imagem <input name="file-selected" type="file" style="display:none">
+                            </label>
+                            <p id="image-selected"></p>
+                            <button type="submit" onsubmit="submitImage();" style="display: none;" data-toggle="tooltip" class="btn btn-sm btn-success" id="change-image"><i class="glyphicon glyphicon-ok"></i></button>
+                            </form>
+                        <?php
+                        if(isset($_FILES['file-selected'])) {
+                            $uploadfile = $_FILES["file-selected"]["tmp_name"];
+                            $folder = "wp-content/themes/illdy/uploads/";
+                            move_uploaded_file($_FILES["file-selected"]["tmp_name"], $folder . $_FILES["file-selected"]["name"]);
+                            $params = array();
+                            $params['id'] = 2;
+                            $params['idAssociate'] = $_SESSION['idAssociate'];
+                            $params['image'] = $_FILES["file-selected"]["name"];
+                            changeAssociateState($params);
 
-	<?php
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class=" col-md-9 col-lg-9 ">
+                        <table id='userTable' class="table table-user-information">
+                            <tbody id="userBody">
+                            <div id="dialog-associate" title="Atualização"></div>
+                            </tbody>
+                        </table>
+<!--
+                        <a href="#" class="btn btn-primary">My Sales Performance</a>
+                        <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                        -->
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                <span id="edit-clear" class="pull-right">
+                            <a data-original-title="Editar perfil" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" id="edit-button"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="/wordpress/wp-content/illdy/session.php?logout" data-original-title="Logout" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        </span>
+                <span id="confirm-info" class="pull-right">
+                    <button data-original-title="Confirmar mudanças" data-toggle="confirmation" class="btn btn-sm btn-success" id="confirm-button"><i class="glyphicon glyphicon-ok"></i></button>
+                    <button data-original-title="Perfil" data-toggle="tooltip" class="btn btn-sm btn-info" id="profile-again"><i class="glyphicon glyphicon-user"></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <input id="hiddenAssociateId" type="hidden" value="<?=$_SESSION['idAssociate']?>">
+    <input id="hiddenControl" type="hidden" value="foo">
+    <div id="image-upload">
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="file" id="upload_file" name="upload_file" />
+            <input type="submit" name='submit_image' value="Upload Image"/>
+        </form>
+    </div>
+
+    <?php
 	if ( get_option( 'show_on_front' ) == 'page' && is_front_page() ):
 		get_template_part( 'sections/front-page', 'bottom-header' );
 	else:

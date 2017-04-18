@@ -45,7 +45,6 @@
  * @link        http://pear.php.net/package/Mail/
  */
 
-require_once 'PEAR.php';
 
 /**
  * PEAR's Mail:: interface. Defines the interface for implementing
@@ -55,6 +54,8 @@ require_once 'PEAR.php';
  * @version $Revision$
  * @package Mail
  */
+require_once 'PEAR.php';
+
 class Mail
 {
     /**

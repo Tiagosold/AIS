@@ -20,14 +20,15 @@ function changeAssociateState($params){
         $finalData = date('d-m-Y', strtotime('+ '.$quotas.' years'));
         $query = "UPDATE utilizador SET estado='$state', dataInicio='$date', dataFinal='$finalData' WHERE idUtilizador='$idAssociate';";
     }elseif($id == 2){
-        $query = "";
+        $image = $params['image'];
+        $query = "UPDATE utilizador SET imagem='$image' WHERE idUtilizador='$idAssociate';";
     }
     $result = mysqli_query($connection,$query) or die(mysqli_error($connection));
 
     if($result){
         $response['cod'] = 200;
         $response['error'] = FALSE;
-        $response['msg'] = mysqli_insert_id();
+        $response['msg'] = 'All good';
     }else {
         $response['cod'] = 500;
         $response['error'] = TRUE;
@@ -50,8 +51,8 @@ function getAssociates($params){
     if ($result) {
         while ($associate = mysqli_fetch_array($result)) {
             $response[] = $associate;
-        }
-        $response['cod'] = 200;
+
+        }$response['cod'] = 200;
     } else {
         $response['cod'] = 500;
         $response['error'] = TRUE;

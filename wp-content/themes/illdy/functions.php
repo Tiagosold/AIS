@@ -472,16 +472,15 @@ function sendEmail($to, $subject, $body)
 {
     $response = false;
     $from = '<tiagosold@gmail.com>';
-    /*   $to = '<tiago_-ribeiro@hotmail.com>';
-       $subject = 'Hi!';
-       $body = "Hi,\n\nHow are you?";
-   */
+
     $headers = array(
         'From' => $from,
         'To' => $to,
         'Subject' => $subject
     );
+
     $smtp = Mail::factory('smtp', array(
+      //  'debug'=> true,
         'host' => 'ssl://smtp.gmail.com',
         'port' => '465',
         'auth' => true,
@@ -493,8 +492,18 @@ function sendEmail($to, $subject, $body)
 
     if (PEAR::isError($mail)) {
         $response = false;
+     //   echo("<p>" . $mail->getMessage() . "</p>");
     } else {
-       $response = true;
+        $response = true;
+     //   echo("<p>Message successfully sent!</p>");
     }
     return $response;
+}
+
+add_filter('wp_nav_menu_items','add_to_new_menu', 10, 2);
+function add_to_new_menu( $items, $args ) {
+    if( $args->theme_location == 'new-menu')  {
+        $items .= '<li class="perfil menu-item"><a href="/wordpress/wp-content/illdy/session.php?logout">Perfil</a></li>';
+    }
+    return $items;
 }

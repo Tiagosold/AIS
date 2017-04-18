@@ -22,14 +22,14 @@ require_once "wp-content/themes/illdy/Mail-1.4.0/Mail.php";
     <link href="/wordpress/wp-content/themes/illdy/layout/css/style-admin.css" rel="stylesheet">
     <link href="/wordpress/wp-content/themes/illdy/layout/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="/wordpress/wp-content/themes/illdy/js/jquery_ui/jquery-ui.css" rel="stylesheet">
-    <script src="/wordpress/wp-content/themes/illdy/jsautoload/jquery.js"></script>
     <script src="/wordpress/wp-content/themes/illdy/jsautoload/jquery-1.11.2.min.js"></script>
     <script src="/wordpress/wp-content/themes/illdy/js/bootstrap.min.js"></script>
+    <script src="/wordpress/wp-content/themes/illdy/jsautoload/mbootstrap-confirmation.min.js"></script>
     <script src="/wordpress/wp-content/themes/illdy/js/jquery.dataTables.min.js"></script>
     <script src="/wordpress/wp-content/themes/illdy/js/jquery_ui/jquery-ui.js"></script>
-    <script src="/wordpress/wp-content/themes/illdy/jsautoload/lAdmin.js"></script>
-    <script src="/wordpress/wp-content/themes/illdy/jsautoload/lassociate.js"></script>
-    <script src="/wordpress/wp-content/themes/illdy/jsautoload/lfunctions.js"></script>
+    <script src="/wordpress/wp-content/themes/illdy/jsautoload/vAdmin.js"></script>
+    <script src="/wordpress/wp-content/themes/illdy/jsautoload/vassociate.js"></script>
+    <script src="/wordpress/wp-content/themes/illdy/jsautoload/vfunctions.js"></script>
     <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
 </head>
 <body>

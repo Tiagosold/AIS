@@ -17,8 +17,8 @@
 					</div>
 					<div class="col-md-10">
 						<h2><?php _e( 'OOOPS!', 'illdy' ) ?></h2>
-						<p><?php _e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet lorem ac orci dictum sodales et eget orci. Vestibulum a laoreet dolor. Sed finibus vulputate nisl, at pulvinar nisi commodo ac. Proin placerat auctor libero. Phasellus nec suscipit mi, sed faucibus purus.', 'illdy' ) ?></p>
-						<a href="<?php echo site_url() ?>" class="button"><?php _e( 'Home', 'illdy' ) ?></a>
+						<p><?php _e( 'Página que está a tentar aceder não existe ou não tem permissões para a visualizar!', 'illdy' ) ?></p>
+						<a href="<?php echo site_url() ?>" class="button" style="background-color: #1dafba;"><?php _e( 'Home', 'illdy' ) ?></a>
 					</div>
 				</div>
 			</section><!--/#blog-->

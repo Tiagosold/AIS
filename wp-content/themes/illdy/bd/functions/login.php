@@ -24,6 +24,7 @@ function validateLogin($params)
             $pass = $params['password'];
             $dbPass = $fetch['password'];
             $idType = $fetch['idTipoUtilizador'];
+            $idAssociate = $fetch['idUtilizador'];
             //     $name = $fetch['name'];
             //     $lastName = $fetch['lastName'];
            //if ($dbPass === $pass) {
@@ -38,6 +39,7 @@ function validateLogin($params)
                         $response['error'] = FALSE;
                         $response['idType'] = $idType;
                         $response['email'] = $email;
+                        $response['idAssociate'] = $idAssociate;
                         $response['cod'] = 200;
                     }
                 } else {
@@ -131,6 +133,10 @@ function addEditAssociate($params)
             $finalDate = $params['finalDate'];
             $query = "UPDATE utilizador SET numeroAluno='$student_number', nomeUtilizador='$name', email='$email', telemovel='$phone', 
                 ano='$year', dataFinal='$finalDate', idCurso='$course', dataInicio='$initialDate' WHERE idUtilizador='$idAssociate';";
+        } elseif ($id === '1'){
+            $idAssociate = $params['idAssociate'];
+            $query = "UPDATE utilizador SET numeroAluno='$student_number', nomeUtilizador='$name', email='$email', telemovel='$phone', 
+            ano='$year', idCurso='$course' WHERE idUtilizador='$idAssociate';";
         }
         $result = mysqli_query($connection, $query);
         if ($result) {
@@ -193,7 +199,7 @@ function encryptPassword($password)
 
 // Create a random salt
     $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-
+//    $salt = random_bytes(5);
 // Prefix information about the hash so PHP knows how to verify it later.
 // "$2a$" Means we're using the Blowfish algorithm. The following two digits are the cost parameter.
     $salt = sprintf("$2a$%02d$", $cost) . $salt;

@@ -39,7 +39,7 @@
                         $email = $_POST['email'];
                         $id = $_POST['idAssociate'];
                         sendEmail($email, utf8_decode('Recuperação da password'), 'Aceda ao seguinte link para criar uma nova password para a sua conta
-                         http://' . $_SERVER['HTTP_HOST'] . '/wordpress?reg=' . $random.'&ida='. $id);
+                        http://' . $_SERVER['HTTP_HOST'] . '/wordpress?reg=' . $random.'&ida='. $id);
                     }
                     ?>
                 </section><!--/#blog-->
